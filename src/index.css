@@ -1,0 +1,68 @@
+/* src/index.css */
+@font-face {
+  font-family: 'Simply Chocolate';
+  src: url('https://www.simplychocolate.dk/cdn/shop/t/128/assets/Simply-ChocolateThin.ttf?v=12913898514874345651787662978') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Simply Chocolate';
+  src: url('https://www.simplychocolate.dk/cdn/shop/t/128/assets/Simply-ChocolateLight.ttf?v=69493098969376951831787662974') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Simply Chocolate';
+  src: url('https://www.simplychocolate.dk/cdn/shop/t/128/assets/Simply-ChocolateRegular.ttf?v=103495034228189424961787662976') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Simply Chocolate';
+  src: url('https://www.simplychocolate.dk/cdn/shop/t/128/assets/Simply-ChocolateBold.ttf?v=30902812437503829621787662968') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Simply Chocolate';
+  src: url('https://www.simplychocolate.dk/cdn/shop/t/128/assets/Simply-ChocolateBlack.ttf?v=102175272282813219811787662967') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Simply Chocolate Condensed';
+  src: url('https://www.simplychocolate.dk/cdn/shop/t/128/assets/Simply-ChocolateCOMP.ttf?v=149854345978295880491787662970') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Simply Chocolate Condensed';
+  src: url('https://www.simplychocolate.dk/cdn/shop/t/128/assets/Simply-ChocolateCOMPBold.ttf?v=32123948463603197371787662971') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#FDFBF7] text-[#2C1E16] antialiased selection:bg-[#D4A373]/30;
+    font-family: 'Simply Chocolate', sans-serif;
+    font-weight: 400;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Simply Chocolate', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+}
