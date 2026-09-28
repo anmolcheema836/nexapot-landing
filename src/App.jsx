@@ -1,26 +1,66 @@
 // src/App.jsx
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { 
   MessageCircle, ArrowRight, Layers, ChefHat, 
   Smartphone, ShieldCheck, Heart, Bell, 
   Sparkles, Users, LineChart, ChevronRight,
   Zap, BarChart3, Mail, MapPin, Phone
 } from 'lucide-react';
-
+import { draw, effect, frame, init, sampler, surface, target, uniforms } from 'vgpu';
+import AeroShards from './components/ReactBits/Aeroshards';
 import PlasmaWave from './components/ReactBits/PlasmaWave';
 import DitherVeil from './components/ReactBits/DitherViel';
 import ElectricLogo from './components/ReactBits/ElectricLogo';
 import MoltenMetal from './components/ReactBits/MoltenMetal';
+import Lightfall from './components/ReactBits/Lightfall';
 import ParticleText from './components/ReactBits/ParticleText';
 import Silk from './components/ReactBits/Silk';
 import TechText from './components/ReactBits/TechText';
+
+// --- CUSTOM CURSOR COMPONENT (Single Dot) ---
+const CustomCursor = () => {
+  const cursorRef = useRef(null);
+  const [isHovering, setIsHovering] = useState(false);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const { clientX, clientY, target } = e;
+      
+      // Instant follow logic applied to the wrapper for zero latency
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate3d(${clientX}px, ${clientY}px, 0)`;
+      }
+      
+      // Check if hovering over a clickable element to trigger the CSS scale transition
+      setIsHovering(!!target.closest('a, button, [role="button"]'));
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  return (
+    <div 
+      ref={cursorRef}
+      className="hidden md:block fixed top-0 left-0 pointer-events-none z-[9999]"
+      style={{ willChange: 'transform' }}
+    >
+      <div 
+        className={`w-2 h-2 -ml-1 -mt-1 bg-orange-500 rounded-full shadow-[0_0_15px_rgba(234,88,12,0.9)] transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${isHovering ? 'scale-[2.5] bg-orange-400' : 'scale-100'}`}
+      ></div>
+    </div>
+  );
+};
 
 function App() {
   const WHATSAPP_LINK = "https://whatsapp.com/channel/0029VbDz73FKgsO2qSWDv81a";
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-zinc-100 overflow-x-hidden font-sans selection:bg-orange-500/30">
+    // md:cursor-none hides the default cursor on desktop devices
+    <div className="min-h-screen bg-[#09090b] text-zinc-100 overflow-x-hidden font-sans selection:bg-orange-500/30 md:cursor-none [&_a]:md:cursor-none [&_button]:md:cursor-none">
       
+      <CustomCursor />
+
       {/* --- BACKGROUND GRID --- */}
       <div className="fixed inset-0 z-0 pointer-events-none bg-[url('https://res.cloudinary.com/dzl9yxixg/image/upload/v1714558602/grid_1_uz3j6m.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-20"></div>
 
@@ -29,7 +69,7 @@ function App() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <a href="/" className="flex items-center hover:opacity-80 transition-opacity">
             <img 
-              src="/logo.png" 
+              src="logo.png" 
               alt="Nexapot" 
               className="h-8 md:h-10 w-auto max-w-[140px] md:max-w-[160px] object-contain" 
             />
@@ -55,7 +95,39 @@ function App() {
         
         {/* Molten Background */}
         <div className="absolute inset-0 z-0 opacity-60 mix-blend-screen">
-          <Silk speed={5} scale={1} color="#532200" noiseIntensity={1.5} rotation={0} />
+          <div style={{ width: '100%', height: '600px', position: 'relative' }}>
+            <AeroShards
+              backgroundColor="#000000"
+              shardColor="#ec6305"
+              accentColor="#ff6800"
+              placement="full"
+              flow="stream"
+              material="pearl"
+              detail="balanced"
+              effect="none"
+              scale={1}
+              spread={1}
+              depth={1}
+              speed={1}
+              spin={1}
+              interaction="repel"
+              density={1.5}
+              shardSize={1.1}
+              stretch={1}
+              turbulence={1}
+              glow={1}
+              edgeSoftness={2}
+              bloom={0.5}
+              grain={0.05}
+              chromaticAberration={0.0075}
+              transitionDuration={1}
+              interactionRadius={1.5}
+              interactionStrength={0.5}
+              rippleIntensity={1}
+              holdToGather
+              paused={false}
+            />
+          </div>
         </div>
 
         {/* Ambient Glow */}
@@ -96,28 +168,22 @@ function App() {
       </section>
 
       {/* --- VIDEO DEMO SECTION --- */}
-      {/* 
-        Mobile Fix: Changed from `-mt-10` to `mt-8 md:-mt-20`. 
-        This ensures the video doesn't overlap the hero buttons on smaller phones.
-      */}
       <section className="relative z-20 max-w-6xl mx-auto px-4 md:px-8 mt-8 md:-mt-20 mb-20 md:mb-24">
         {/* Outer glowing glass frame */}
         <div className="relative rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden p-1.5 md:p-3 bg-white/[0.03] backdrop-blur-xl border border-white/10 shadow-[0_0_50px_rgba(234,88,12,0.1)] group hover:shadow-[0_0_80px_rgba(234,88,12,0.25)] transition-all duration-700 hover:scale-[1.01] hover:border-orange-500/30">
           
           {/* Inner video wrapper */}
           <div className="relative rounded-[1.25rem] md:rounded-[2rem] overflow-hidden bg-black/50 aspect-video">
-            {/* Dark gradient overlay for a premium cinematic look */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none z-10 transition-opacity duration-700 group-hover:opacity-0"></div>
             
             <video 
-              src="/nexapot.mp4" 
-              // poster="/thumbnail.jpg" // Optional: Add a highly compressed JPEG image here to show before the video loads
+              src="nexapot.mp4" 
               autoPlay 
               loop 
               muted 
-              playsInline // CRITICAL FOR iOS
+              playsInline 
               disablePictureInPicture
-              preload="metadata" // Stops the browser from aggressively downloading the whole 192mb on page load
+              preload="metadata" 
               className="w-full h-full object-cover transform scale-100 group-hover:scale-105 transition-transform duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
             />
           </div>
@@ -196,17 +262,14 @@ function App() {
             </div>
           </div>
 
-          {/* 4. Anti-Theft Inventory (Span 2 - Hero Box) */}
-          <div className="md:col-span-2 rounded-[2rem] border border-orange-500/30 bg-black p-6 md:p-10 flex flex-col justify-between overflow-hidden relative group shadow-[0_0_30px_rgba(234,88,12,0.1)] transition-all duration-500">
-             <div className="absolute inset-0 z-0 opacity-40 mix-blend-screen group-hover:opacity-70 transition-opacity duration-700 pointer-events-none">
-                <PlasmaWave colors={["#ea580c", "#3f3f46"]} lightMode={false} speed1={0.02} />
-             </div>
-             <div className="relative z-10 pointer-events-none w-full sm:w-4/5">
-                <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-black border border-white/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-                  <ShieldCheck className="w-6 h-6 md:w-7 md:h-7 text-orange-400" />
+          {/* 4. Anti-Theft Inventory (Span 2) */}
+          <div className="md:col-span-2 rounded-[2rem] border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 md:p-10 flex flex-col justify-between shadow-2xl hover:bg-white/[0.05] transition-all duration-500 group relative overflow-hidden">
+             <div className="relative z-10 w-full sm:w-4/5">
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                  <ShieldCheck className="w-6 h-6 md:w-7 md:h-7 text-white group-hover:text-orange-400 transition-colors" />
                 </div>
                 <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 tracking-tight">Anti-Theft, Gram-Perfect Inventory</h3>
-                <p className="text-zinc-300 text-base md:text-lg leading-relaxed drop-shadow-md">
+                <p className="text-zinc-400 text-base md:text-lg leading-relaxed">
                   Stop losing money to unrecorded waste and theft. Sell one cappuccino, and the system automatically deducts the exact grams of beans and milk. Get live alerts before you run out.
                 </p>
              </div>
@@ -316,7 +379,7 @@ function App() {
           {/* Dither Veil Profile */}
           <div className="w-full md:w-1/2 h-[400px] md:h-[550px] relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-black">
             <DitherVeil
-              src="/anmol.png"
+              src="anmol.png"
               pattern="floyd"
               pixelSize={1}
               inkColor="#000000"
@@ -343,7 +406,7 @@ function App() {
               <Sparkles className="w-4 h-4" /> Message from the Founder
             </div>
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
-              Built for owners, by <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-200">Anmol Cheema</span>.
+              Built for owners, by <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-200">Anmol Singh</span>.
             </h2>
             <p className="text-zinc-300 text-lg md:text-xl leading-relaxed mb-6 font-light">
               "I watched restaurants bleed margins every single month because they were forced to stitch together 5 different expensive software platforms just to operate. It was broken."
@@ -352,7 +415,7 @@ function App() {
               That's why we built Nexapot. It is designed from the ground up to be the ultimate operating system for modern restaurants. We took the complexity out of operations so you can focus entirely on scaling your revenue and perfecting your food. 
             </p>
             <div>
-              <img src="/logo.png" alt="Nexapot" className="h-8 opacity-50 grayscale" />
+              <img src="logo.png" alt="Nexapot" className="h-8 opacity-50 grayscale" />
             </div>
           </div>
         </div>
@@ -389,7 +452,7 @@ function App() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           {/* Brand Info */}
           <div className="md:col-span-2">
-            <img src="/logo.png" alt="Nexapot" className="h-8 mb-6" />
+            <img src="logo.png" alt="Nexapot" className="h-8 mb-6" />
             <p className="text-zinc-400 text-sm leading-relaxed max-w-sm mb-6">
               The ultimate OS built to help restaurants cut software costs, prevent inventory theft, and scale operations smoothly. 
             </p>

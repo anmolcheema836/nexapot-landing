@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
- "homepage": "https://anmolcheema836.github.io/nexapot-landing",
+  "homepage": "https://anmolcheema836.github.io/nexapot-landing",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -28,6 +28,7 @@
     "ogl": "^1.0.11",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "three": "^0.186.1"
+    "three": "^0.186.1",
+    "vgpu": "^0.5.0"
   }
 }
