@@ -177,7 +177,7 @@ function App() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none z-10 transition-opacity duration-700 group-hover:opacity-0"></div>
             
             <video 
-              src="nexapot.mp4" 
+              src="https://res.cloudinary.com/jikiqsjk/video/upload/v1790665634/nexapot.mp4" 
               autoPlay 
               loop 
               muted 
@@ -406,7 +406,7 @@ function App() {
               <Sparkles className="w-4 h-4" /> Message from the Founder
             </div>
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
-              Built for owners, by <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-200">Anmol Singh</span>.
+              Built for owners, by <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-200">Anmol Cheema</span>.
             </h2>
             <p className="text-zinc-300 text-lg md:text-xl leading-relaxed mb-6 font-light">
               "I watched restaurants bleed margins every single month because they were forced to stitch together 5 different expensive software platforms just to operate. It was broken."
