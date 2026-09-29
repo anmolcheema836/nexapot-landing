@@ -5,8 +5,8 @@
   "type": "module",
   "homepage": "https://anmolcheema836.github.io/nexapot-landing",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "node api.js && vite",
+    "build": "node api.js && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
